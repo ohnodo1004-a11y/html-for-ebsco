@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDLINE Ultimate — DGIST Library Trial</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');font-weight:300;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+
+:root{
+  --bg:#F5F3EF;
+  --ink:#111111;
+  --accent:#0AA5B8;
+  --line: rgba(17,17,17,0.16);
+  --line-soft: rgba(17,17,17,0.09);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Freesentation', sans-serif;
+  font-weight:400;
+  font-size:14.5px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:'Freesentation', sans-serif;
+  font-weight:700;
+  margin:0;
+  letter-spacing:-0.01em;
+}
+a{color:var(--ink);}
+p{margin:0 0 14px;}
+
+.shell{display:flex; min-height:100vh;}
+
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:262px;
+  border-right:1px solid var(--line);
+  padding:32px 26px 26px;
+  overflow-y:auto;
+  background:var(--bg);
+}
+.sidebar-logo{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+.sidebar-logo img{height:20px; width:auto; display:block;}
+.sidebar-kicker{font-size:11px; letter-spacing:.06em; color:var(--accent); margin:2px 0 26px; text-transform:uppercase;}
+.sidebar h1{font-size:19px; line-height:1.32; margin-bottom:6px;}
+.sidebar .date{font-size:11.5px; color:rgba(17,17,17,.55); margin-bottom:22px;}
+.sidebar .crosslink{display:block; font-size:12px; color:var(--accent); text-decoration:none; margin-bottom:26px; border-bottom:1px solid var(--line); padding-bottom:22px;}
+.sidebar .crosslink:hover{opacity:.7;}
+
+nav.index{border-top:1px solid var(--line); padding-top:18px;}
+nav.index .grp{margin-bottom:22px;}
+nav.index .grp-title{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(17,17,17,.45); margin-bottom:8px;}
+nav.index a{
+  display:flex; gap:10px; text-decoration:none; font-size:13px;
+  padding:5px 0; color:var(--ink); border-bottom:1px solid transparent;
+}
+nav.index a:hover{color:var(--accent);}
+nav.index a .num{color:rgba(17,17,17,.4); font-size:12px; min-width:18px;}
+
+.main{margin-left:262px; width:calc(100% - 262px);}
+
+.hero{
+  padding:64px 64px 48px;
+  border-bottom:1px solid var(--line);
+}
+.hero .eyebrow{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+.hero h1{font-size:38px; line-height:1.22; max-width:820px;}
+.hero p.lead{font-size:15px; max-width:660px; margin-top:20px; color:rgba(17,17,17,.78);}
+
+section.db{border-bottom:1px solid var(--line);}
+.db-header{padding:0 64px 28px;}
+.db-header .db-eyebrow{font-size:12px; color:var(--accent); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px;}
+.db-header h2{font-size:30px;}
+.db-header .sub{font-size:13.5px; color:rgba(17,17,17,.6); margin-top:8px;}
+
+.block{padding:0 64px 56px;}
+.block h3{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(17,17,17,.5); margin-bottom:18px; padding-top:36px; border-top:1px solid var(--line-soft);}
+.block h3 .n{color:var(--accent); margin-right:8px;}
+
+.intro-grid{display:flex; gap:48px; flex-wrap:wrap;}
+.intro-text{flex:1 1 420px;}
+.intro-text p{font-size:14px; color:rgba(17,17,17,.85);}
+.stat-panel{flex:1 1 320px; border:1px solid var(--line); height:fit-content;}
+.stat-row{display:flex; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--line-soft); font-size:13px; gap:12px;}
+.stat-row:last-child{border-bottom:none;}
+.stat-row .k{color:rgba(17,17,17,.7);}
+.stat-row .v{font-weight:600; font-size:15px; white-space:nowrap;}
+.value-callout{border:1px solid var(--accent); padding:18px 20px; margin-top:18px;}
+.value-callout .label{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--accent);}
+.value-callout .amount{font-size:26px; font-weight:700; margin-top:6px;}
+.value-callout .note{font-size:11.5px; color:rgba(17,17,17,.55); margin-top:6px;}
+
+table.region{width:100%; border-collapse:collapse; font-size:12.6px; margin-top:8px;}
+table.region td{padding:7px 10px; border-bottom:1px solid var(--line-soft);}
+table.region td.num{text-align:right; font-weight:600;}
+
+.cluster{margin-bottom:34px;}
+.cluster-head{display:flex; align-items:baseline; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+.cluster-no{font-size:13px; color:var(--accent); font-weight:700;}
+.cluster-head h4{font-size:15px; font-weight:600;}
+.cover-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(108px, 1fr)); gap:14px;}
+.cover{margin:0; border:1px solid var(--line);}
+.cover img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block; background:#fff;}
+.cover figcaption{font-size:10.5px; padding:6px 7px; line-height:1.35; color:rgba(17,17,17,.72); border-top:1px solid var(--line-soft);}
+
+.usage-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--line);}
+.usage-item{padding:18px 18px; border-right:1px solid var(--line);}
+.usage-item:last-child{border-right:none;}
+.usage-item .who{font-size:11px; color:var(--accent); letter-spacing:.04em; margin-bottom:8px; text-transform:uppercase; font-weight:600;}
+.usage-item p{font-size:12.4px; margin-bottom:0; color:rgba(17,17,17,.8);}
+
+.note-box{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:20px 0; margin-top:6px; font-size:12.6px; color:rgba(17,17,17,.7);}
+
+footer{padding:48px 64px 80px;}
+footer .logo-row{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+footer .logo-row img{height:16px;}
+footer p{font-size:12px; color:rgba(17,17,17,.55);}
+
+@media (max-width: 900px){
+  .sidebar{display:none;}
+  .main{margin-left:0; width:100%;}
+  .hero, .db-header, .block, footer{padding-left:24px; padding-right:24px;}
+  .usage-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ebsco-logo-ink.png?raw=true" alt="EBSCO"></div>
+  <div class="sidebar-kicker">DGIST Library · Database Trial</div>
+  <h1>MEDLINE Ultimate</h1>
+  <div class="date">Trial Open — 2026. 08</div>
+  <a class="crosslink" href="business-source-premier.html">→ Business Source Premier 자료 보기</a>
+
+  <nav class="index">
+    <div class="grp">
+      <a href="#overview"><span class="num">00</span>Trial 소개</a>
+      <a href="#intro"><span class="num">01</span>DB 소개</a>
+      <a href="#coverage"><span class="num">02</span>커버리지 현황</a>
+      <a href="#content"><span class="num">03</span>주요 컨텐츠</a>
+      <a href="#usage"><span class="num">04</span>이용 대상별 활용</a>
+      <a href="#howto"><span class="num">05</span>Trial 이용 안내</a>
+    </div>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <section class="hero" id="overview">
+    <div class="eyebrow">DGIST Library Database Trial</div>
+    <h1>MEDLINE Ultimate, Trial로 직접 확인해 보세요.</h1>
+    <p class="lead">DGIST 도서관은 이용자들의 요청이 많았던 EBSCO의 생의학 데이터베이스 <strong>MEDLINE Ultimate</strong>의 Trial을 오픈했습니다. 아래 소개 자료를 참고하여 수록 범위와 대표 저널을 확인하시고, Trial 기간 동안 자유롭게 이용해 보시기 바랍니다.</p>
+  </section>
+
+  <section class="db">
+    <div class="db-header" style="padding-top:56px;">
+      <div class="db-eyebrow">Biomedical &amp; Life Sciences</div>
+      <h2>MEDLINE Ultimate</h2>
+      <div class="sub">EBSCO · MEDLINE 색인 저널에 대한 원문 제공률이 가장 높은 생의학 데이터베이스 (2026년 7월 기준)</div>
+    </div>
+
+    <div class="block" id="intro">
+      <h3><span class="n">01</span>DB 소개</h3>
+      <div class="intro-grid">
+        <div class="intro-text">
+          <p>MEDLINE Ultimate는 PubMed의 색인 데이터베이스인 MEDLINE의 원문(Full Text) 보완 자료로, MEDLINE에 색인된 저널 가운데 원문을 제공하는 비중이 EBSCO 제품군 중 가장 높은 생의학 데이터베이스입니다. 기초의학·임상의학·간호·공중보건·약학 등 생명의학 전 분야를 포괄하며, MEDLINE 색인 저널 5,225종 중 2,498종(47.81%)에 대해 Active Full text를 제공합니다.</p>
+<p>PubMed에서 검색한 문헌을 Outside Tool 링크 리졸버를 통해 MEDLINE Ultimate 원문으로 바로 연결할 수 있으며, 다수 저널의 Ahead of Print 콘텐츠도 함께 제공되어 최신 연구 동향을 빠르게 확인할 수 있습니다.</p>
+        </div>
+        <div class="stat-panel">
+          <div class="stat-row"><span class="k">전체 Full text 저널·매거진</span><span class="v">3,327</span></div>
+<div class="stat-row"><span class="k">Active Full text 저널·매거진</span><span class="v">2,498</span></div>
+<div class="stat-row"><span class="k">Active Full text, Peer Reviewed</span><span class="v">2,465</span></div>
+<div class="stat-row"><span class="k">Web of Science / Scopus 색인</span><span class="v">2,457</span></div>
+<div class="stat-row"><span class="k">Active Full text, Peer Reviewed, NO Embargo</span><span class="v">1,326</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="coverage">
+      <h3><span class="n">02</span>커버리지 현황</h3>
+      <div class="intro-grid">
+        <div class="intro-text" style="flex:1 1 460px;">
+          <p style="font-size:12.6px; color:rgba(17,17,17,.6); margin-bottom:10px;">Active Full text 저널 · 국가/지역별 (주요 지역)</p>
+          <table class="region">
+            <tr><td>영국 &amp; 아일랜드</td><td class="num">1,007</td><td>독일어권 유럽</td><td class="num">607</td></tr>
+            <tr><td>미국</td><td class="num">378</td><td>이탈리아 &amp; 스위스</td><td class="num">114</td></tr>
+            <tr><td>중앙 &amp; 동유럽</td><td class="num">86</td><td>남아시아 &amp; 동남아시아</td><td class="num">67</td></tr>
+            <tr><td>중동 &amp; 북아프리카</td><td class="num">40</td><td>일본</td><td class="num">41</td></tr>
+            <tr><td>캐나다</td><td class="num">32</td><td>중국·홍콩·대만</td><td class="num">32</td></tr>
+            <tr><td>중남미 &amp; 카리브해</td><td class="num">31</td><td>호주 &amp; 뉴질랜드</td><td class="num">26</td></tr>
+          </table>
+        </div>
+        <div class="stat-panel" style="flex:1 1 260px;">
+          <div class="value-callout">
+            <div class="label">Active Full text, Non-OA 저널 정가 환산</div>
+            <div class="amount">$2,889,881.77</div>
+            <div class="note">개별 출판사 직접 구독 시 도서관이 지불해야 할 상당액</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="content">
+      <h3><span class="n">03</span>주요 컨텐츠 · 수록 저널</h3>
+      <p style="font-size:12.6px; color:rgba(17,17,17,.6); margin-bottom:28px;">MEDLINE Ultimate이 NO Embargo·Active Full text로 제공하는 대표 저널 패밀리와 개별 타이틀입니다.</p>
+      <div class="cluster">
+<div class="cluster-head"><span class="cluster-no">01</span><h4>American Journal of Public Health</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-001.jpg?raw=true" alt="American Journal of Public Health 저널 커버" loading="lazy"><figcaption>American Journal of Public Health</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">02</span><h4>Science 저널 및 자매지 4종 (AAAS, American Association for the Advancement of Science)</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-006.jpg?raw=true" alt="Science · 1880~ 저널 커버" loading="lazy"><figcaption>Science · 1880~</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-010.jpg?raw=true" alt="Science Signaling · 2008~ 저널 커버" loading="lazy"><figcaption>Science Signaling · 2008~</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-012.jpg?raw=true" alt="Science Translational Medicine · 2009~ 저널 커버" loading="lazy"><figcaption>Science Translational Medicine · 2009~</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-008.jpg?raw=true" alt="Science Immunology · 2015~ 저널 커버" loading="lazy"><figcaption>Science Immunology · 2015~</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">03</span><h4>American Journal of Physiology 학회 저널</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-014.jpg?raw=true" alt="AJP: Cell Physiology 저널 커버" loading="lazy"><figcaption>AJP: Cell Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-015.jpg?raw=true" alt="AJP: Endocrinology and Metabolism 저널 커버" loading="lazy"><figcaption>AJP: Endocrinology and Metabolism</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ajp-gastrointestinal-liver-physiology.jpg?raw=true" alt="AJP: Gastrointestinal and Liver Physiology 저널 커버" loading="lazy"><figcaption>AJP: Gastrointestinal and Liver Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-016.jpg?raw=true" alt="AJP: Heart and Circulatory Physiology 저널 커버" loading="lazy"><figcaption>AJP: Heart and Circulatory Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-017.jpg?raw=true" alt="AJP: Lung Cellular and Molecular Physiology 저널 커버" loading="lazy"><figcaption>AJP: Lung Cellular and Molecular Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-018.jpg?raw=true" alt="AJP: Regulatory, Integrative and Comparative Physiology 저널 커버" loading="lazy"><figcaption>AJP: Regulatory, Integrative and Comparative Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-019.jpg?raw=true" alt="AJP: Renal Physiology 저널 커버" loading="lazy"><figcaption>AJP: Renal Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-020.jpg?raw=true" alt="Physiological Genomics 저널 커버" loading="lazy"><figcaption>Physiological Genomics</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-021.jpg?raw=true" alt="Journal of Applied Physiology 저널 커버" loading="lazy"><figcaption>Journal of Applied Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-022.jpg?raw=true" alt="JNP · Journal of Neurophysiology 저널 커버" loading="lazy"><figcaption>JNP · Journal of Neurophysiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-023.jpg?raw=true" alt="Physiological Reviews 저널 커버" loading="lazy"><figcaption>Physiological Reviews</figcaption></figure>
+<figure class="cover"><img src=https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-024.jpg?raw=true" alt="Physiology 저널 커버" loading="lazy"><figcaption>Physiology</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">04</span><h4>No Embargo 핵심 저널 I</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-042.jpg?raw=true" alt="Aerospace Medicine &amp; Human Performance 저널 커버" loading="lazy"><figcaption>Aerospace Medicine &amp; Human Performance</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-043.jpg?raw=true" alt="American Family Physician 저널 커버" loading="lazy"><figcaption>American Family Physician</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ajnr.jpg?raw=true" alt="American Journal of Neuroradiology 저널 커버" loading="lazy"><figcaption>American Journal of Neuroradiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-035.jpg?raw=true" alt="AJP: Heart &amp; Circulatory Physiology 저널 커버" loading="lazy"><figcaption>AJP: Heart &amp; Circulatory Physiology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-036.jpg?raw=true" alt="American Journal of Respiratory &amp; Critical Care Medicine 저널 커버" loading="lazy"><figcaption>American Journal of Respiratory &amp; Critical Care Medicine</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-037.png?raw=true" alt="American Journal of Respiratory Cell &amp; Molecular Biology 저널 커버" loading="lazy"><figcaption>American Journal of Respiratory Cell &amp; Molecular Biology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-038.jpg?raw=true" alt="Annals of Internal Medicine 저널 커버" loading="lazy"><figcaption>Annals of Internal Medicine</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-039.jpg?raw=true" alt="British Journal of General Practice 저널 커버" loading="lazy"><figcaption>British Journal of General Practice</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-040.jpg?raw=true" alt="Clinical Chemistry &amp; Laboratory Medicine 저널 커버" loading="lazy"><figcaption>Clinical Chemistry &amp; Laboratory Medicine</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-041.jpg?raw=true" alt="Diabetes 저널 커버" loading="lazy"><figcaption>Diabetes</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">05</span><h4>No Embargo 핵심 저널 II</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-044.jpg?raw=true" alt="Diabetes Care 저널 커버" loading="lazy"><figcaption>Diabetes Care</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-045.jpg?raw=true" alt="Drug Metabolism &amp; Personalized Therapy 저널 커버" loading="lazy"><figcaption>Drug Metabolism &amp; Personalized Therapy</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-047.jpg?raw=true" alt="The Journal of Neuroscience 저널 커버" loading="lazy"><figcaption>The Journal of Neuroscience</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-046.jpg?raw=true" alt="Journal of Neurosurgery 저널 커버" loading="lazy"><figcaption>Journal of Neurosurgery</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-049.png?raw=true" alt="The Journal of Nuclear Medicine 저널 커버" loading="lazy"><figcaption>The Journal of Nuclear Medicine</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-052.jpg?raw=true" alt="Medical Care Research and Review 저널 커버" loading="lazy"><figcaption>Medical Care Research and Review</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">06</span><h4>SAGE 출판사 주요 저널</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-055.jpg?raw=true" alt="Autism 저널 커버" loading="lazy"><figcaption>Autism</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-058.jpg?raw=true" alt="Journal of Cerebral Blood Flow &amp; Metabolism 저널 커버" loading="lazy"><figcaption>Journal of Cerebral Blood Flow &amp; Metabolism</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/clinical-rehabilitation.png?raw=true" alt="Clinical Rehabilitation 저널 커버" loading="lazy"><figcaption>Clinical Rehabilitation</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/palliative-medicine.jpg?raw=true" alt="Palliative Medicine 저널 커버" loading="lazy"><figcaption>Palliative Medicine</figcaption></figure>
+<figure class="cover"><img src="assets/medline/lupus.jpg" alt="Lupus: An International Journal 저널 커버" loading="lazy"><figcaption>Lupus: An International Journal</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/multiple-sclerosis-journal.jpg?raw=true" alt="Multiple Sclerosis Journal 저널 커버" loading="lazy"><figcaption>Multiple Sclerosis Journal</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-065.jpg?raw=true" alt="Toxicology and Industrial Health 저널 커버" loading="lazy"><figcaption>Toxicology and Industrial Health</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-066.jpg?raw=true" alt="Neurorehabilitation &amp; Neural Repair 저널 커버" loading="lazy"><figcaption>Neurorehabilitation &amp; Neural Repair</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-067.jpg?raw=true" alt="Journal of Psychopharmacology 저널 커버" loading="lazy"><figcaption>Journal of Psychopharmacology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-068.jpg?raw=true" alt="International Journal of STD &amp; AIDS 저널 커버" loading="lazy"><figcaption>International Journal of STD &amp; AIDS</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-069.jpg?raw=true" alt="Personality and Social Psychology Bulletin 저널 커버" loading="lazy"><figcaption>Personality and Social Psychology Bulletin</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-070.jpg?raw=true" alt="Journal of Biomaterials Applications 저널 커버" loading="lazy"><figcaption>Journal of Biomaterials Applications</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-071.png?raw=true" alt="Journal of Oncology Pharmacy Practice 저널 커버" loading="lazy"><figcaption>Journal of Oncology Pharmacy Practice</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-072.jpg?raw=true" alt="Quarterly Journal of Experimental Psychology 저널 커버" loading="lazy"><figcaption>Quarterly Journal of Experimental Psychology</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/img-073.jpg?raw=true" alt="IJAO · International Journal of Artificial Organs 저널 커버" loading="lazy"><figcaption>IJAO · International Journal of Artificial Organs</figcaption></figure>
+</div></div>
+    </div>
+
+    <div class="block" id="usage">
+      <h3><span class="n">04</span>이용 대상별 활용</h3>
+      <div class="usage-grid">
+        <div class="usage-item"><div class="who">학부생</div><p>American Journal of Public Health 등 대중적 공중보건 저널로 리포트·발표 자료의 최신 사례를 확인합니다.</p></div>
+<div class="usage-item"><div class="who">대학원생</div><p>Science 계열·APS 계열 등 No Embargo 원문으로 문헌리뷰와 선행연구 조사 시간을 단축합니다.</p></div>
+<div class="usage-item"><div class="who">교수</div><p>Ahead of Print 콘텐츠로 출간 전 최신 연구를 강의에 즉시 반영합니다.</p></div>
+<div class="usage-item"><div class="who">연구원</div><p>PubMed 인용문헌에서 Outside Tool 링크 리졸버로 원문에 곧바로 연결해 검색 시간을 줄입니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="howto" style="padding-top:48px;">
+    <h3 style="border-top:none; padding-top:0;"><span class="n">05</span>Trial 이용 안내</h3>
+    <div class="note-box">
+      Trial 이용 중 문의사항이나 정식 구독 관련 의견이 있으시면 도서관으로 연락해 주세요.
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo-row"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ebsco-logo-ink.png?raw=true" alt="EBSCO"></div>
+    <p>&copy; 2026 EBSCO Information Services, Inc.</p>
+  </footer>
+
+</main>
+</div>
+</body>
+</html>
