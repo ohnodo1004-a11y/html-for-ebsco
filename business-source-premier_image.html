@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Source Premier — DGIST Library Trial</title>
+<style>
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');font-weight:300;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+
+:root{
+  --bg:#F5F3EF;
+  --ink:#111111;
+  --accent:#0AA5B8;
+  --line: rgba(17,17,17,0.16);
+  --line-soft: rgba(17,17,17,0.09);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Freesentation', sans-serif;
+  font-weight:400;
+  font-size:14.5px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:'Freesentation', sans-serif;
+  font-weight:700;
+  margin:0;
+  letter-spacing:-0.01em;
+}
+a{color:var(--ink);}
+p{margin:0 0 14px;}
+
+.shell{display:flex; min-height:100vh;}
+
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:262px;
+  border-right:1px solid var(--line);
+  padding:32px 26px 26px;
+  overflow-y:auto;
+  background:var(--bg);
+}
+.sidebar-logo{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+.sidebar-logo img{height:20px; width:auto; display:block;}
+.sidebar-kicker{font-size:11px; letter-spacing:.06em; color:var(--accent); margin:2px 0 26px; text-transform:uppercase;}
+.sidebar h1{font-size:19px; line-height:1.32; margin-bottom:6px;}
+.sidebar .date{font-size:11.5px; color:rgba(17,17,17,.55); margin-bottom:22px;}
+.sidebar .crosslink{display:block; font-size:12px; color:var(--accent); text-decoration:none; margin-bottom:26px; border-bottom:1px solid var(--line); padding-bottom:22px;}
+.sidebar .crosslink:hover{opacity:.7;}
+
+nav.index{border-top:1px solid var(--line); padding-top:18px;}
+nav.index .grp{margin-bottom:22px;}
+nav.index .grp-title{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(17,17,17,.45); margin-bottom:8px;}
+nav.index a{
+  display:flex; gap:10px; text-decoration:none; font-size:13px;
+  padding:5px 0; color:var(--ink); border-bottom:1px solid transparent;
+}
+nav.index a:hover{color:var(--accent);}
+nav.index a .num{color:rgba(17,17,17,.4); font-size:12px; min-width:18px;}
+
+.main{margin-left:262px; width:calc(100% - 262px);}
+
+.hero{
+  padding:64px 64px 48px;
+  border-bottom:1px solid var(--line);
+}
+.hero .eyebrow{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+.hero h1{font-size:38px; line-height:1.22; max-width:820px;}
+.hero p.lead{font-size:15px; max-width:660px; margin-top:20px; color:rgba(17,17,17,.78);}
+
+section.db{border-bottom:1px solid var(--line);}
+.db-header{padding:0 64px 28px;}
+.db-header .db-eyebrow{font-size:12px; color:var(--accent); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px;}
+.db-header h2{font-size:30px;}
+.db-header .sub{font-size:13.5px; color:rgba(17,17,17,.6); margin-top:8px;}
+
+.block{padding:0 64px 56px;}
+.block h3{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(17,17,17,.5); margin-bottom:18px; padding-top:36px; border-top:1px solid var(--line-soft);}
+.block h3 .n{color:var(--accent); margin-right:8px;}
+
+.intro-grid{display:flex; gap:48px; flex-wrap:wrap;}
+.intro-text{flex:1 1 420px;}
+.intro-text p{font-size:14px; color:rgba(17,17,17,.85);}
+.stat-panel{flex:1 1 320px; border:1px solid var(--line); height:fit-content;}
+.stat-row{display:flex; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--line-soft); font-size:13px; gap:12px;}
+.stat-row:last-child{border-bottom:none;}
+.stat-row .k{color:rgba(17,17,17,.7);}
+.stat-row .v{font-weight:600; font-size:15px; white-space:nowrap;}
+.value-callout{border:1px solid var(--accent); padding:18px 20px; margin-top:18px;}
+.value-callout .label{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--accent);}
+.value-callout .amount{font-size:26px; font-weight:700; margin-top:6px;}
+.value-callout .note{font-size:11.5px; color:rgba(17,17,17,.55); margin-top:6px;}
+
+table.region{width:100%; border-collapse:collapse; font-size:12.6px; margin-top:8px;}
+table.region td{padding:7px 10px; border-bottom:1px solid var(--line-soft);}
+table.region td.num{text-align:right; font-weight:600;}
+
+.cluster{margin-bottom:34px;}
+.cluster-head{display:flex; align-items:baseline; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+.cluster-no{font-size:13px; color:var(--accent); font-weight:700;}
+.cluster-head h4{font-size:15px; font-weight:600;}
+.cover-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(108px, 1fr)); gap:14px;}
+.cover{margin:0; border:1px solid var(--line);}
+.cover img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block; background:#fff;}
+.cover figcaption{font-size:10.5px; padding:6px 7px; line-height:1.35; color:rgba(17,17,17,.72); border-top:1px solid var(--line-soft);}
+
+.usage-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--line);}
+.usage-item{padding:18px 18px; border-right:1px solid var(--line);}
+.usage-item:last-child{border-right:none;}
+.usage-item .who{font-size:11px; color:var(--accent); letter-spacing:.04em; margin-bottom:8px; text-transform:uppercase; font-weight:600;}
+.usage-item p{font-size:12.4px; margin-bottom:0; color:rgba(17,17,17,.8);}
+
+.note-box{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:20px 0; margin-top:6px; font-size:12.6px; color:rgba(17,17,17,.7);}
+
+footer{padding:48px 64px 80px;}
+footer .logo-row{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+footer .logo-row img{height:16px;}
+footer p{font-size:12px; color:rgba(17,17,17,.55);}
+
+@media (max-width: 900px){
+  .sidebar{display:none;}
+  .main{margin-left:0; width:100%;}
+  .hero, .db-header, .block, footer{padding-left:24px; padding-right:24px;}
+  .usage-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ebsco-logo-ink.png?raw=true" alt="EBSCO"></div>
+  <div class="sidebar-kicker">DGIST Library · Database Trial</div>
+  <h1>Business Source Premier</h1>
+  <div class="date">Trial Open — 2026. 08</div>
+  <a class="crosslink" href="https://ohnodo1004-a11y.github.io/html-for-ebsco/medline-ultimate_image.html">→ MEDLINE Ultimate 자료 보기</a>
+
+  <nav class="index">
+    <div class="grp">
+      <a href="#overview"><span class="num">00</span>Trial 소개</a>
+      <a href="#intro"><span class="num">01</span>DB 소개</a>
+      <a href="#coverage"><span class="num">02</span>커버리지 현황</a>
+      <a href="#content"><span class="num">03</span>주요 컨텐츠</a>
+      <a href="#usage"><span class="num">04</span>이용 대상별 활용</a>
+      <a href="#howto"><span class="num">05</span>Trial 이용 안내</a>
+    </div>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <section class="hero" id="overview">
+    <div class="eyebrow">DGIST Library Database Trial</div>
+    <h1>Business Source Premier, Trial로 직접 확인해 보세요.</h1>
+    <p class="lead">DGIST 도서관은 이용자들의 요청이 많았던 EBSCO의 경영학 데이터베이스 <strong>Business Source Premier</strong>의 Trial을 오픈했습니다. 아래 소개 자료를 참고하여 수록 범위와 대표 저널을 확인하시고, Trial 기간 동안 자유롭게 이용해 보시기 바랍니다.</p>
+  </section>
+
+  <section class="db">
+    <div class="db-header" style="padding-top:56px;">
+      <div class="db-eyebrow">Business &amp; Management</div>
+      <h2>Business Source Premier</h2>
+      <div class="sub">EBSCO의 대표 경영학 데이터베이스 · 저널 원문과 기업·산업 정보를 함께 제공</div>
+    </div>
+
+    <div class="block" id="intro">
+      <h3><span class="n">01</span>DB 소개</h3>
+      <div class="intro-grid">
+        <div class="intro-text">
+          <p>Business Source Premier(BSP)는 경영학·회계·재무·마케팅·MIS·오퍼레이션 전 분야를 아우르는 EBSCO의 대표 경영학 데이터베이스입니다. Harvard Business Review, Academy of Management, INFORMS, American Marketing Association, American Accounting Association 등 해당 분야 최상위 학회·출판사의 저널을 기관 e-journal 형태로 제공하며, 기업 프로파일·산업 리포트·국가 경제 리포트·SWOT 분석 등 저널 외 2차 데이터도 함께 수록되어 있습니다.</p>
+<p><em>Financial Times</em>가 선정한 경영대학 핵심 저널 50종(FT50) 비교에서도 BSP는 경쟁 데이터베이스(ProQuest ABI/INFORM) 대비 21종을 단독으로 Active Full text 제공하고 있습니다.</p>
+        </div>
+        <div class="stat-panel">
+          <div class="stat-row"><span class="k">Active Full text 저널·매거진</span><span class="v">1,017</span></div>
+<div class="stat-row"><span class="k">Active Full text, Peer Reviewed</span><span class="v">675</span></div>
+<div class="stat-row"><span class="k">Web of Science / Scopus 색인</span><span class="v">537</span></div>
+<div class="stat-row"><span class="k">Active Full text, Peer Reviewed, NO Embargo</span><span class="v">357</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="coverage">
+      <h3><span class="n">02</span>커버리지 현황</h3>
+      <div class="intro-grid">
+        <div class="intro-text" style="flex:1 1 460px;">
+          <p style="font-size:12.6px; color:rgba(17,17,17,.6); margin-bottom:10px;">Active Full text 저널 · 국가/지역별</p>
+          <table class="region">
+            <tr><td>미국</td><td class="num">418</td><td>유럽 본토</td><td class="num">143</td></tr>
+            <tr><td>영국 &amp; 아일랜드</td><td class="num">302</td><td>아시아</td><td class="num">68</td></tr>
+            <tr><td>중동 &amp; 아프리카</td><td class="num">29</td><td>중남미 &amp; 카리브해</td><td class="num">24</td></tr>
+            <tr><td>캐나다</td><td class="num">12</td><td>호주 &amp; 뉴질랜드</td><td class="num">12</td></tr>
+          </table>
+          <p style="font-size:12.6px; color:rgba(17,17,17,.6); margin:22px 0 10px;">저널 외 Full text 컨텐츠</p>
+          <table class="region">
+            <tr><td>기업 프로파일 (Company Profiles)</td><td class="num">18,887</td></tr>
+            <tr><td>케이스 스터디 (Case Studies)</td><td class="num">8,179</td></tr>
+            <tr><td>산업 리포트 (Industry Reports)</td><td class="num">8,054</td></tr>
+            <tr><td>SWOT 분석</td><td class="num">5,724</td></tr>
+            <tr><td>국가 경제 리포트</td><td class="num">897</td></tr>
+            <tr><td>워킹페이퍼</td><td class="num">1,000</td></tr>
+            <tr><td>Company Discovery Pages 수록 기업 수</td><td class="num">약 11,000개사</td></tr>
+          </table>
+        </div>
+        <div class="stat-panel" style="flex:1 1 260px;">
+          <div class="value-callout">
+            <div class="label">Active Full text, Non-OA 저널 정가 환산</div>
+            <div class="amount">$598,614.87</div>
+            <div class="note">개별 출판사 직접 구독 시 도서관이 지불해야 할 상당액</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="content">
+      <h3><span class="n">03</span>주요 컨텐츠 · 수록 저널</h3>
+      <p style="font-size:12.6px; color:rgba(17,17,17,.6); margin-bottom:28px;">Business Source Premier가 기관 e-journal로 제공하는 대표 매거진·학술지입니다.</p>
+      <div class="cluster">
+<div class="cluster-head"><span class="cluster-no">01</span><h4>대표 비즈니스 매거진</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/entrepreneur.jpg?raw=true" alt="Entrepreneur 저널 커버" loading="lazy"><figcaption>Entrepreneur</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/bloomberg-businessweek.jpg?raw=true" alt="Bloomberg Businessweek 저널 커버" loading="lazy"><figcaption>Bloomberg Businessweek</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/fast-company.jpg?raw=true" alt="Fast Company 저널 커버" loading="lazy"><figcaption>Fast Company</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/inc.jpg?raw=true" alt="Inc. 저널 커버" loading="lazy"><figcaption>Inc.</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/forbes.jpg?raw=true" alt="Forbes 저널 커버" loading="lazy"><figcaption>Forbes</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/fortune.jpg?raw=true" alt="Fortune 저널 커버" loading="lazy"><figcaption>Fortune</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">02</span><h4>Harvard Business Review</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/hbr-1.jpg?raw=true" alt="Harvard Business Review · 1922 저널 커버" loading="lazy"><figcaption>Harvard Business Review · 1922</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/hbr-2.jpg?raw=true" alt="Harvard Business Review · 2001 저널 커버" loading="lazy"><figcaption>Harvard Business Review · 2001</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/hbr-3.jpg?raw=true" alt="Harvard Business Review 저널 커버" loading="lazy"><figcaption>Harvard Business Review</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/hbr-4.jpg?raw=true" alt="Harvard Business Review 저널 커버" loading="lazy"><figcaption>Harvard Business Review</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">03</span><h4>American Accounting Association</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/accounting-review.png?raw=true" alt="The Accounting Review 저널 커버" loading="lazy"><figcaption>The Accounting Review</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/auditing.png?raw=true" alt="Auditing: A Journal of Practice &amp; Theory 저널 커버" loading="lazy"><figcaption>Auditing: A Journal of Practice &amp; Theory</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/behavioral-research-accounting.png?raw=true" alt="Behavioral Research in Accounting 저널 커버" loading="lazy"><figcaption>Behavioral Research in Accounting</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/accounting-horizons.png?raw=true" alt="Accounting Horizons 저널 커버" loading="lazy"><figcaption>Accounting Horizons</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">04</span><h4>MIS Quarterly</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/mis-quarterly.png?raw=true" alt="MIS Quarterly 저널 커버" loading="lazy"><figcaption>MIS Quarterly</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">05</span><h4>Academy of Management</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/aom-journal.jpg?raw=true" alt="Academy of Management Journal 저널 커버" loading="lazy"><figcaption>Academy of Management Journal</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/aom-review.jpg?raw=true" alt="Academy of Management Review 저널 커버" loading="lazy"><figcaption>Academy of Management Review</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/aom-discoveries.jpg?raw=true" alt="Academy of Management Discoveries 저널 커버" loading="lazy"><figcaption>Academy of Management Discoveries</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/aom-learning-education.jpg?raw=true" alt="Academy of Management Learning &amp; Education 저널 커버" loading="lazy"><figcaption>Academy of Management Learning &amp; Education</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">06</span><h4>INFORMS</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/management-science.jpg?raw=true" alt="Management Science 저널 커버" loading="lazy"><figcaption>Management Science</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/operations-research.jpg?raw=true" alt="Operations Research 저널 커버" loading="lazy"><figcaption>Operations Research</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/organization-science.jpg?raw=true" alt="Organization Science 저널 커버" loading="lazy"><figcaption>Organization Science</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/marketing-science.jpg?raw=true" alt="Marketing Science 저널 커버" loading="lazy"><figcaption>Marketing Science</figcaption></figure>
+</div></div>
+<div class="cluster">
+<div class="cluster-head"><span class="cluster-no">07</span><h4>American Marketing Association</h4></div>
+<div class="cover-grid">
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/journal-of-marketing.png?raw=true" alt="Journal of Marketing 저널 커버" loading="lazy"><figcaption>Journal of Marketing</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/journal-of-international-marketing.png?raw=true" alt="Journal of International Marketing 저널 커버" loading="lazy"><figcaption>Journal of International Marketing</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/journal-of-marketing-research.png?raw=true" alt="Journal of Marketing Research (JMR) 저널 커버" loading="lazy"><figcaption>Journal of Marketing Research (JMR)</figcaption></figure>
+<figure class="cover"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/journal-of-public-policy-marketing.png?raw=true" alt="Journal of Public Policy &amp; Marketing 저널 커버" loading="lazy"><figcaption>Journal of Public Policy &amp; Marketing</figcaption></figure>
+</div></div>
+    </div>
+
+    <div class="block" id="usage">
+      <h3><span class="n">04</span>이용 대상별 활용</h3>
+      <div class="usage-grid">
+        <div class="usage-item"><div class="who">학부생</div><p>Fortune, Forbes, HBR 등 대중적 비즈니스 매거진으로 산업 트렌드와 기업 사례를 학습합니다.</p></div>
+<div class="usage-item"><div class="who">대학원생</div><p>Academy of Management·INFORMS·AMA 등 최상위 저널 원문으로 논문·세미나 자료를 작성합니다.</p></div>
+<div class="usage-item"><div class="who">교수</div><p>Case Studies·기업 프로파일을 강의 사례 연구(Case Method) 자료로 활용합니다.</p></div>
+<div class="usage-item"><div class="who">연구원</div><p>산업·국가 리포트, SWOT 분석 등 2차 데이터로 실증 연구의 배경 자료를 보강합니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="howto" style="padding-top:48px;">
+    <h3 style="border-top:none; padding-top:0;"><span class="n">05</span>Trial 이용 안내</h3>
+    <div class="note-box">
+      Trial 이용 중 문의사항이나 정식 구독 관련 의견이 있으시면 도서관으로 연락해 주세요.
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo-row"><img src="https://github.com/ohnodo1004-a11y/html-for-ebsco/blob/main/ebsco-logo-ink.png?raw=true" alt="EBSCO"></div>
+    <p>&copy; 2026 EBSCO Information Services, Inc.</p>
+  </footer>
+
+</main>
+</div>
+</body>
+</html>
